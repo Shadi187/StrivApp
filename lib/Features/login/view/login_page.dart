@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
-import '../../../Widgets/widgets.dart'; //  Import for the reusable widgets
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../Widgets/widgets.dart';
 import '../../../Features/reset_password/view/resetpassword.dart';
+import '../viewmodel/login_notifier.dart';
+import '../viewmodel/login_state.dart';
 
-class LoginPage extends StatelessWidget {
+// Change from StatelessWidget to ConsumerWidget to use Riverpod
+class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final backgroundColor = const Color.fromRGBO(9, 13, 25, 1);
+    
+    // WATCH THE STATE - UI rebuilds when state changes
+    final authState = ref.watch(authNotifierProvider);
+    
+    // Controllers for form fields
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -30,9 +41,52 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 30),
-                const InputField(hint: "Email"),
+                
+                // Email field
+                InputField(
+                  hint: "Email",
+                  controller: emailController,
+                ),
                 const SizedBox(height: 15),
-                const InputField(hint: "Password", isPassword: true),
+                
+                // Password field
+                InputField(
+                  hint: "Password", 
+                  isPassword: true,
+                  controller: passwordController,
+                ),
+
+                // Show error message if there's an error
+                if (authState is AuthError) ...[
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.red.withOpacity(0.3)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error, color: Colors.red, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            authState.message,
+                            style: const TextStyle(color: Colors.red, fontSize: 14),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            // READ THE NOTIFIER - call its methods
+                            ref.read(authNotifierProvider.notifier).clearError();
+                          },
+                          icon: const Icon(Icons.close, color: Colors.red, size: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
 
                 Align(
                   alignment: Alignment.centerRight,
@@ -55,7 +109,29 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
 
-                PrimaryButton(label: "Sign in", onPressed: () {}),
+                // Login button - changes based on state
+                PrimaryButton(
+                  label: authState is AuthLoading ? "Signing in..." : "Sign in",
+                  onPressed: authState is AuthLoading? null // Disable button when loading
+                      : () {
+                          // READ THE NOTIFIER - call signInWithEmail method
+                          final notifier = ref.read(authNotifierProvider.notifier);
+                          notifier.signInWithEmail(
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                          );
+                        },
+                ),
+
+                // Show loading indicator if loading
+                if (authState is AuthLoading) ...[
+                  const SizedBox(height: 20),
+                  const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xFF1D72A0),
+                    ),
+                  ),
+                ],
 
                 const SizedBox(height: 40),
                 const Row(

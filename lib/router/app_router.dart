@@ -7,6 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 
 import '../Features/login/view/login_page.dart';
+import '../Features/login/viewmodel/login_notifier.dart';
+import '../Features/login/viewmodel/login_state.dart';
 // import '../Features/home/view/home_shell.dart';
 
 class StreamListenable extends ChangeNotifier {
@@ -45,6 +47,22 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       )),
     ],
-    // Remove redirect logic for now to simplify debugging
+    redirect: (context, state) {
+      final authState = ref.read(authNotifierProvider);
+      final isLoggedIn = authState is AuthAuthenticated;
+      final isLoggingIn = state.matchedLocation == '/login';
+
+      // If not logged in and not on login page, redirect to login
+      if (!isLoggedIn && !isLoggingIn) return '/login';
+      
+      // If logged in and on login page, redirect to home
+      if (isLoggedIn && isLoggingIn) return '/';
+      
+      // Otherwise, stay where you are
+      return null;
+    },
+    refreshListenable: StreamListenable(
+      FirebaseAuth.instance.authStateChanges(),
+    ),
   );
 });

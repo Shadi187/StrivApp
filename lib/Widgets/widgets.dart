@@ -25,7 +25,8 @@ class AppBackButton extends StatelessWidget {
 class InputField extends StatelessWidget {
   final String hint;
   final bool isPassword;
-  const InputField({super.key, required this.hint, this.isPassword = false});
+  final TextEditingController controller;
+  const InputField({super.key, required this.hint, this.isPassword = false, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class InputField extends StatelessWidget {
 /// هنا Primary Button
 class PrimaryButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   const PrimaryButton({super.key, required this.label, required this.onPressed});
 
   @override

@@ -36,7 +36,7 @@ class ForgetPasswordPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const InputField(hint: "Enter your email"),
+                // const InputField(hint: "Enter your email"),
                 const SizedBox(height: 35),
                 PrimaryButton(
                   label: "Reset Password",

@@ -40,9 +40,9 @@ class SetNewPasswordPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
 
-                const InputField(hint: "Enter new password", isPassword: true),
+                // const InputField(hint: "Enter new password", isPassword: true),
                 const SizedBox(height: 15),
-                const InputField(hint: "Confirm password", isPassword: true),
+                // const InputField(hint: "Confirm password", isPassword: true),
 
                 const SizedBox(height: 30),
 

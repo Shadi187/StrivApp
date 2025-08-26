@@ -21,13 +21,19 @@ class PersonalInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WelcomePage();
+    return  WelcomePage();
   }
 }
 
 /// ---------------- WELCOME PAGE ----------------
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+   WelcomePage({super.key});
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +90,9 @@ class NamePage extends StatelessWidget {
             style: TextStyle(color: Colors.white70),
           ),
           const SizedBox(height: 20),
-          const InputField(hint: 'Name'),
+          // InputField(hint: 'Name', controller: nameController),
           const SizedBox(height: 15),
-          const InputField(hint: 'Surname'),
+          // InputField(hint: 'Surname', controller: surnameController),
           const Spacer(),
           PrimaryButton(
             label: 'Continue ➔',
@@ -179,7 +185,7 @@ class WeightPage extends StatelessWidget {
             style: TextStyle(color: Colors.white70),
           ),
           const SizedBox(height: 20),
-          const InputField(hint: 'Weight (kg)'),
+          // const InputField(hint: 'Weight (kg)'),
           const Spacer(),
           PrimaryButton(
             label: 'Continue ➔',

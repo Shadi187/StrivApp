@@ -32,13 +32,13 @@ class RegisterPage extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 30),
-                const InputField(hint: "Username"),
+                // const InputField(hint: "Username"),
                 const SizedBox(height: 15),
-                const InputField(hint: "Email"),
+                // const InputField(hint: "Email"),
                 const SizedBox(height: 15),
-                const InputField(hint: "Password", isPassword: true),
+                // const InputField(hint: "Password", isPassword: true),
                 const SizedBox(height: 15),
-                const InputField(hint: "Confirm password", isPassword: true),
+                // const InputField(hint: "Confirm password", isPassword: true),
 
                 const SizedBox(height: 25),
                 PrimaryButton(label: "Register", onPressed: () {}),
