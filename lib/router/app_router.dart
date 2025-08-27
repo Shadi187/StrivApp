@@ -49,16 +49,28 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
     redirect: (context, state) {
       final authState = ref.read(authNotifierProvider);
+      
+      // Add debug logging
+      print('🔄 Router redirect - Current state: ${authState.runtimeType}');
+      print('🔄 Current location: ${state.matchedLocation}');
+      
       final isLoggedIn = authState is AuthAuthenticated;
       final isLoggingIn = state.matchedLocation == '/login';
 
       // If not logged in and not on login page, redirect to login
-      if (!isLoggedIn && !isLoggingIn) return '/login';
+      if (!isLoggedIn && !isLoggingIn) {
+        print('🔄 Redirecting to login');
+        return '/login';
+      }
       
       // If logged in and on login page, redirect to home
-      if (isLoggedIn && isLoggingIn) return '/';
+      if (isLoggedIn && isLoggingIn) {
+        print('🔄 Redirecting to home');
+        return '/';
+      }
       
       // Otherwise, stay where you are
+      print('🔄 Staying on current page');
       return null;
     },
     refreshListenable: StreamListenable(

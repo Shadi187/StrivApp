@@ -17,17 +17,11 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -60,4 +54,23 @@ class DefaultFirebaseOptions {
     storageBucket: 'striv-b25d2.firebasestorage.app',
     iosBundleId: 'com.example.strivBackend',
   );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBz2vVHjUJRzCQsF3NDVJkCFxq8OniT9AM',
+    appId: '1:214122616725:android:babbb23d5501c87549489c',
+    messagingSenderId: '214122616725',
+    projectId: 'striv-b25d2',
+    storageBucket: 'striv-b25d2.firebasestorage.app',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAyhLvK3MX2QirmZq6Vr0fH1fniBhS1m4U',
+    appId: '1:214122616725:web:17440f1803071a2f49489c',
+    messagingSenderId: '214122616725',
+    projectId: 'striv-b25d2',
+    authDomain: 'striv-b25d2.firebaseapp.com',
+    storageBucket: 'striv-b25d2.firebasestorage.app',
+    measurementId: 'G-46FE63DH95',
+  );
+
 }
